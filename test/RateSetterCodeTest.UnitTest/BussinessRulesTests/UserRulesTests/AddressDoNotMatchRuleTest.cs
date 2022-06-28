@@ -3,7 +3,7 @@ using RateSetterCodeTest.Models;
 
 namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
 {
-    public class DoestNotMatchAddressRule
+    public class AddressDoNotMatchRuleTest
     {
         [Fact]
         public void GivenNewUserAddress_WhenCheckingRuleIfExistingUserAddress_ThenItShouldReturnFalse()
@@ -11,7 +11,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             var address1 = GivenSampleExistingAddress();
             var address2 = GivenSampleAddress1();
 
-            var result = BussinesRules.UserRules.DoestNotMatchAddressRule.IsTrue(address1, address2);
+            var result = BussinesRules.UserRules.AddressDoNotMatchRule.IsTrue(address1, address2);
 
             Assert.False(result);
         }
@@ -22,7 +22,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             var address1 = GivenSampleExistingAddress();
             var address2 = GivenSampleAddress2();
 
-            var result = BussinesRules.UserRules.DoestNotMatchAddressRule.IsTrue(address1, address2);
+            var result = BussinesRules.UserRules.AddressDoNotMatchRule.IsTrue(address1, address2);
 
             Assert.True(result);
         }

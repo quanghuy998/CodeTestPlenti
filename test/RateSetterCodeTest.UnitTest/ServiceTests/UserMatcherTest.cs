@@ -41,7 +41,18 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserReferralCode_WhenCheckingThatNotMatchExistingUser_ThenItShouldReturnFalse()
+        public void GivenNewUserReferralCode_WhenCheckingWithSameExistingUserReferralCode_ThenItShouldReturnTrue()
+        {
+            var newUser = GivenSampleNewUserHaveTheSameReferralCode();
+            var existingUser = GivenSampleExistingUser();
+
+            var result = _matcher.IsMatch(newUser, existingUser);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void GivenNewUserHaveNotExistingReferralCode_WhenCheckingWithExistingUser_ThenItShouldReturnFalse()
         {
             var newUser = GivenSampleNewUser();
             var existingUser = GivenSampleExistingUser();
@@ -50,6 +61,18 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
 
             Assert.False(result);
         }
+
+        [Fact]
+        public void GivenNewUserDoNotHaveRefferalCode_WhenCheckingWithExistingUser_ThenItShouldReturnFalse()
+        {
+            var newUser = GivenSampleNewUserDoNotHaveReferralCode();
+            var existingUser = GivenSampleExistingUser();
+
+            var result = _matcher.IsMatch(newUser, existingUser);
+
+            Assert.False(result);
+        }
+
 
         private User GivenSampleExistingUser()
         {
@@ -73,6 +96,18 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         {
             var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
             return new User(address, "Marc Levy", "ABC321");
+        }
+
+        private User GivenSampleNewUserHaveTheSameReferralCode()
+        {
+            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
+            return new User(address, "Marc Levy", "ABC123");
+        }
+
+        private User GivenSampleNewUserDoNotHaveReferralCode()
+        {
+            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
+            return new User(address, "Marc Levy", null);
         }
 
         private User GivenSampleNewUser()

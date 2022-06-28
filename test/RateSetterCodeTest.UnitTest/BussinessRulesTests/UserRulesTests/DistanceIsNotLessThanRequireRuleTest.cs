@@ -3,7 +3,7 @@ using RateSetterCodeTest.Models;
 
 namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
 {
-    public class DoesNotLessThanDistanceRuleTest
+    public class DistanceIsNotLessThanRequireRuleTest
     {
         [Fact]
         public void GivenNewUserLocation_WhenCheckingRuleIfExistingUserWhoDoesNotLiveNearby_ThenItShouldReturnTrue()
@@ -11,7 +11,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             var address1 = GivenSampleExistingAddress();
             var address2 = GivenSampleAddressNotNearby();
 
-            var result = DoesNotLessThanDistanceRule.IsTrue(address1, address2);
+            var result = DistanceIsNotLessThanRequireRule.IsTrue(address1, address2);
 
             Assert.True(result);
         }
@@ -22,7 +22,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             var address1 = GivenSampleExistingAddress();
             var address2 = GivenSampleAddressNearby();
 
-            var result = DoesNotLessThanDistanceRule.IsTrue(address1, address2);
+            var result = DistanceIsNotLessThanRequireRule.IsTrue(address1, address2);
 
             Assert.False(result);
         }

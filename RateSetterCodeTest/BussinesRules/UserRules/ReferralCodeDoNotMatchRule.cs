@@ -3,11 +3,12 @@ using System.Linq;
 
 namespace RateSetterCodeTest.BussinesRules.UserRules
 {
-    public class DoesNotMatchRefferalCodeRule
+    public class ReferralCodeDoNotMatchRule
     {
         public static bool IsTrue(string newUserReferralCode, string existingUserReferralCode)
         {
             if(existingUserReferralCode == null) return false;
+            if (newUserReferralCode == existingUserReferralCode) return false;
 
             var array1 = newUserReferralCode.ToArray();
             var array2 = existingUserReferralCode.ToArray();

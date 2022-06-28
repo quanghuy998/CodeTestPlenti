@@ -2,7 +2,7 @@
 
 namespace RateSetterCodeTest.BussinesRules.UserRules
 {
-    public class DoestNotMatchAddressRule
+    public class AddressDoNotMatchRule
     {
         public static bool IsTrue(Address newUserAddress, Address existingUserAddress)
         {

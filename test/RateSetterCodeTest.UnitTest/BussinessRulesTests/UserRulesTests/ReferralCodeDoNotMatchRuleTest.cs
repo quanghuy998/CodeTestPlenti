@@ -3,7 +3,7 @@ using RateSetterCodeTest.Models;
 
 namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
 {
-    public class DoesNotMatchRefferalCodeRuleTest
+    public class ReferralCodeDoNotMatchRuleTest
     {
         [Fact]
         public void GivenNewUserReferralCode_WhenCheckingRuleWithNullExistingUserReferralCode_ThenItShouldReturnFalse()
@@ -11,7 +11,18 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             string existingUserReferralCode = null;
             string newUserReferralCode = GivenSampleNewUserRefferralCodeNotMatch();
 
-            var result = BussinesRules.UserRules.DoesNotMatchRefferalCodeRule.IsTrue(newUserReferralCode, existingUserReferralCode);
+            var result = BussinesRules.UserRules.ReferralCodeDoNotMatchRule.IsTrue(newUserReferralCode, existingUserReferralCode);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void GivenNewUserReferralCode_WhenCheckingRuleWithTheSameExistingUserReferralCode_ThenItShouldReturnFalse()
+        {
+            string existingUserReferralCode = GivenSampleExistingUserReferralCode();
+            string newUserReferralCode = existingUserReferralCode;
+
+            var result = BussinesRules.UserRules.ReferralCodeDoNotMatchRule.IsTrue(newUserReferralCode, existingUserReferralCode);
 
             Assert.False(result);
         }
@@ -25,7 +36,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
 
             foreach(var code in newUserReferralCodes)
             {
-                result = BussinesRules.UserRules.DoesNotMatchRefferalCodeRule.IsTrue(code, existingUserReferralCode);
+                result = BussinesRules.UserRules.ReferralCodeDoNotMatchRule.IsTrue(code, existingUserReferralCode);
                 if (result is false) break;
             }
 
@@ -38,7 +49,7 @@ namespace RateSetterCodeTest.UnitTest.BussinessRulesTest.UserRulesTest
             var existingUserReferralCode = GivenSampleExistingUserReferralCode();
             var newUserReferralCode = GivenSampleNewUserRefferralCodeNotMatch();
 
-            var result = BussinesRules.UserRules.DoesNotMatchRefferalCodeRule.IsTrue(newUserReferralCode, existingUserReferralCode);
+            var result = BussinesRules.UserRules.ReferralCodeDoNotMatchRule.IsTrue(newUserReferralCode, existingUserReferralCode);
 
             Assert.True(result);
         }

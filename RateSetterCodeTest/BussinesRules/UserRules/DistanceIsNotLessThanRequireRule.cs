@@ -4,7 +4,7 @@ using System;
 
 namespace RateSetterCodeTest.BussinesRules.UserRules
 {
-    public class DoesNotLessThanDistanceRule
+    public class DistanceIsNotLessThanRequireRule
     {
         public static bool IsTrue(Address newUserAddress, Address existingUserAddress)
         {
