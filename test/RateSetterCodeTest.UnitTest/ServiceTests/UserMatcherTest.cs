@@ -8,10 +8,11 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         private readonly UserMatcher _matcher = new();
 
         [Fact]
-        public void GivenNewUserAddress_WhenCheckingIfExistingUserAddressAndUserName_ThenItShouldReturnTrue()
+        public void GivenNewUserWithTheDistanceLessThanRequired_WhenCheckingIfMatchExistingUser_ThenItShouldReturnTrue()
         {
-            var newUser = GivenSampleNewUserHaveSameAddressAndName();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("49 Pitt Street", "Sydney", "NSW", 2000, 0.001m, 0.201m);
+            var newUser = new User(newUseraddress, "Marc Levy", "DEF536");
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
@@ -19,10 +20,11 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserLocation_WhenCheckingIfExistingUserWhoLiveNearby_ThenItShouldReturnTrue()
+        public void GivenNewUserWithTheSameNameAndAddress_WhenCheckingIfMatchExistingUser_ThenItShouldReturnTrue()
         {
-            var newUser = GivenSampleNewUserHaveLocationNearby();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("Level 3, 51 Pitt Street", "Sydney", "NSW", 2000, 0, 0.2m);
+            var newUser = new User(newUseraddress, "Guillaume Musso", "DEF536");
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
@@ -30,10 +32,11 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserReferralCode_WhenCheckingIfExistingUserReferralCodeThatMatch_ThenItShouldReturnTrue()
+        public void GivenNewUserWithTheSameNameAndAddressButNameHasUpperCase_WhenCheckingIfMatchExistingUser_ThenItShouldReturnTrue()
         {
-            var newUser = GivenSampleNewUserHaveReferralCodeMatch();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("Level 3, 51 Pitt Street", "Sydney", "NSW", 2000, 0, 0.2m);
+            var newUser = new User(newUseraddress, "GUILLAUME MUSSO", "DEF536");
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
@@ -41,10 +44,11 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserReferralCode_WhenCheckingWithSameExistingUserReferralCode_ThenItShouldReturnTrue()
+        public void GivenNewUserWithTheSameReferralCode_WhenCheckingIfMatchExistingUser_ThenItShouldReturnTrue()
         {
-            var newUser = GivenSampleNewUserHaveTheSameReferralCode();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW", 2000, 1, 1);
+            var newUser = new User(newUseraddress, "Marc Levy", "ABC321");
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
@@ -52,10 +56,11 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserHaveNotExistingReferralCode_WhenCheckingWithExistingUser_ThenItShouldReturnFalse()
+        public void GivenNewUserThatNotMatchAnyRule_WhenCheckingIfMatchExistingUser_ThenItShouldReturnFalse()
         {
-            var newUser = GivenSampleNewUser();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW", 2000, 1, 1);
+            var newUser = new User(newUseraddress, "Marc Levy", "ABC213");
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
@@ -63,57 +68,21 @@ namespace RateSetterCodeTest.UnitTest.ServiceTests
         }
 
         [Fact]
-        public void GivenNewUserDoNotHaveRefferalCode_WhenCheckingWithExistingUser_ThenItShouldReturnFalse()
+        public void GivenNewUserWithNullRefferalCodeAndNotMatchAnyRule_WhenCheckingIfMatchExistingUser_ThenItShouldReturnFalse()
         {
-            var newUser = GivenSampleNewUserDoNotHaveReferralCode();
-            var existingUser = GivenSampleExistingUser();
+            var existingUser = GivenSampleExsitingUser();
+            var newUseraddress = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW", 2000, 1, 1);
+            var newUser = new User(newUseraddress, "Marc Levy", null);
 
             var result = _matcher.IsMatch(newUser, existingUser);
 
             Assert.False(result);
         }
 
-
-        private User GivenSampleExistingUser()
+        private User GivenSampleExsitingUser()
         {
-            var address = new Address("Level 3, 51 Pitt Street", "Sydney", "NSW 2000", 0, 0.2m);
-            return new User(address, "Gullaume Musso", "ABC123");
-        }
-
-        private User GivenSampleNewUserHaveSameAddressAndName()
-        {
-            var address = new Address("Level 3, 51 Pitt Street", "Sydney", "NSW 2000", 0, 0.2m);
-            return new User(address, "Gullaume Musso", "ABC321");
-        }
-
-        private User GivenSampleNewUserHaveLocationNearby()
-        {
-            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 0.001m, 0.201m);
-            return new User(address, "Marc Levy", "ABC321");
-        }
-
-        private User GivenSampleNewUserHaveReferralCodeMatch()
-        {
-            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
-            return new User(address, "Marc Levy", "ABC321");
-        }
-
-        private User GivenSampleNewUserHaveTheSameReferralCode()
-        {
-            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
-            return new User(address, "Marc Levy", "ABC123");
-        }
-
-        private User GivenSampleNewUserDoNotHaveReferralCode()
-        {
-            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
-            return new User(address, "Marc Levy", null);
-        }
-
-        private User GivenSampleNewUser()
-        {
-            var address = new Address("Level 1, 49 Pitt Street", "Sydney", "NSW 2000", 1, 1);
-            return new User(address, "Marc Levy", "ABC213");
+            var existingAddress = new Address("Level 3, 51 Pitt Street", "Sydney", "NSW", 2000, 0, 0.2m);
+            return new User(existingAddress, "Guillaume Musso", "ABC123");
         }
     }
 }

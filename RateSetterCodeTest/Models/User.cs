@@ -1,4 +1,6 @@
-﻿namespace RateSetterCodeTest.Models
+﻿using System;
+
+namespace RateSetterCodeTest.Models
 {
     public class User
     {
@@ -8,8 +10,8 @@
 
         public User(Address address, string name, string referralCode)
         {
-            Address = address;
-            Name = name;
+            Address = address ?? throw new ArgumentNullException(nameof(Address));
+            Name = name ?? throw new ArgumentNullException(nameof(Name));
             ReferralCode = referralCode;
         }
     }

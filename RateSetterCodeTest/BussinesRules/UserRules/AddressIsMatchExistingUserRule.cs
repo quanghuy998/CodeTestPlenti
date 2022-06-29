@@ -2,15 +2,16 @@
 
 namespace RateSetterCodeTest.BussinesRules.UserRules
 {
-    public class AddressDoNotMatchRule
+    public class AddressIsMatchExistingUserRule
     {
         public static bool IsTrue(Address newUserAddress, Address existingUserAddress)
         {
             string address1 = RemoveCharacter(newUserAddress.GetAddress()).ToUpper();
             string address2 = RemoveCharacter(existingUserAddress.GetAddress()).ToUpper();
             
-            if (address1 != address2) return true;
-            else return false;
+            if (address1 == address2) return true;
+            
+            return false;
         }
 
         private static string RemoveCharacter(string str)

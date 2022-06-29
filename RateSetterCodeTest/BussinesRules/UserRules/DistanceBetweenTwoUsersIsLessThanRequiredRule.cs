@@ -1,10 +1,10 @@
-﻿using RateSetterCodeTest.Common;
+﻿using System;
+using RateSetterCodeTest.Common;
 using RateSetterCodeTest.Models;
-using System;
 
 namespace RateSetterCodeTest.BussinesRules.UserRules
 {
-    public class DistanceIsNotLessThanRequireRule
+    public class DistanceBetweenTwoUsersIsLessThanRequiredRule
     {
         public static bool IsTrue(Address newUserAddress, Address existingUserAddress)
         {
@@ -19,8 +19,9 @@ namespace RateSetterCodeTest.BussinesRules.UserRules
                         Math.Pow(Math.Sin(dlon / 2), 2);
             double distanceInKM = 2 * Math.Asin(Math.Sqrt(calculate)) * DistanceConstants.RADIUS_OF_EARTH_IN_KM;
 
-            if (distanceInKM <= DistanceConstants.MINIMUM_DISTANCE_IN_KM_RULE) return false;
-            else return true;
+            if (distanceInKM <= DistanceConstants.MINIMUM_DISTANCE_IN_KM_RULE) return true;
+            
+            return false;
         }
 
         private static double ConvertToRadians(decimal value)
